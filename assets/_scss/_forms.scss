@@ -1,0 +1,53 @@
+/* See _mixins.scss for more on this method for handling HTML5 elements */
+#{$all-text-inputs}, 
+textarea {
+	border: $border;
+	padding: 4px 10px;
+	outline: none;
+	-webkit-appearance: none;
+	&.disabled {
+		opacity: 0.5;	
+	}
+}
+#{$all-text-inputs-focus},
+textarea:focus {
+	
+}
+input[type=submit], button, a.btn {
+	border: none;
+	padding: 7px 20px 5px;
+	text-transform: uppercase;
+	display: inline-block;
+	-webkit-appearance: none;
+	.c & {
+		text-align: center;	
+	}
+	&:focus,
+	&:hover {
+		
+	}
+}
+
+/* Placeholders */
+::placeholder {
+	color: $text;
+}
+
+// Customize Chrome autofill background (yellow by default)
+// input:-webkit-autofill,
+// input:-webkit-autofill:focus {
+//     -webkit-box-shadow:0 0 0 50px #6d6e6e inset; 
+//     -webkit-text-fill-color: white;
+// }
+
+/* Specific Forms */
+#contactFormWrapper {
+	width: 75%;
+	margin: 2em auto;
+}
+.feedback {
+	@extend #contactFormWrapper;
+	color: #b63a07;
+	font-style: italic;	
+	font-weight: bold;
+}

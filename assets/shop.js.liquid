@@ -1,119 +1,59 @@
-window.timber = window.timber || {};
-
-timber.cacheSelectors = function () {
-  timber.cache = {
-    // General
-    $html: $('html'),
-    $body: $('body'),
-
-    // Navigation
-    $navigation: $('#accessibleNav'),
-
-    // Product Page
-    $mainImage: $('#productPhotoImg'),
-    $thumbImages: $('#productThumbs').find('a.product-photo-thumb'),
-    newImage: null
-  }
-}
-
-timber.init = function () {
-  timber.cacheSelectors();
-  timber.accessibleNav();
-  timber.productImageSwitch();
-}
-
-timber.accessibleNav = function () {
-  var $nav = timber.cache.$navigation,
-      $allLinks = $nav.find('a'),
-      $topLevel = $nav.children('li').find('a'),
-      $parents = $nav.find('.site-nav--has-dropdown'),
-      $subMenuLinks = $nav.find('.site-nav--dropdown').find('a'),
-      activeClass = 'nav-hover',
-      focusClass = 'nav-focus';
-
-  // Mouseenter
-  $parents.on('mouseenter touchstart', function(evt) {
-    var $el = $(this);
-
-    if (!$el.hasClass(activeClass)) {
-      evt.preventDefault();
-    }
-
-    showDropdown($el);
-  });
-
-  // Mouseout
-  $parents.on('mouseleave', function() {
-    hideDropdown($(this));
-  });
-
-  $subMenuLinks.on('touchstart', function(evt) {
-    // Prevent touchstart on body from firing instead of link
-    evt.stopImmediatePropagation();
-  });
-
-  $allLinks.focus(function() {
-    handleFocus($(this));
-  });
-
-  $allLinks.blur(function() {
-    removeFocus($topLevel);
-  });
-
-  // accessibleNav private methods
-  function handleFocus ($el) {
-    var $subMenu = $el.next('ul');
-        hasSubMenu = $subMenu.hasClass('sub-nav') ? true : false,
-        isSubItem = $('.site-nav--dropdown').has($el).length,
-        $newFocus = null;
-
-    // Add focus class for top level items, or keep menu shown
-    if ( !isSubItem ) {
-      removeFocus($topLevel);
-      addFocus($el);
-    } else {
-      $newFocus = $el.closest('.site-nav--has-dropdown').find('a');
-      addFocus($newFocus);
-    }
-  }
-
-  function showDropdown ($el) {
-    $el.addClass(activeClass);
-
-    setTimeout(function() {
-      timber.cache.$body.on('touchstart', function() {
-        hideDropdown($el);
+jQuery(document).ready(function($){
+  
+  $('.slider, #slider, .related').fadeIn("slow");
+  $('div.loading').remove();
+  
+  if ($("#slider li").size() == 0) {
+    $("#slider").remove();
+    $("#slider-empty").show(); 
+  } 
+  else {
+    if ($("#slider li").size() > 1) {
+      $('#slider').bxSlider({
+        infiniteLoop: true,
+        speed: 500,
+        auto: true,
+        controls: false,
+        pager: true,
+        autoDelay: 1000,
+        mode: 'fade',
+        pause: {{ settings.slideshow_speed }}
       });
-    }, 250);
+    }    
+    $('#slider').fadeIn('slow');
   }
+ 
+	 $('#slider li img').error(function(){ // remove problematic images
+	   $(this).parents("li.slide").remove();
+	 });
+	 
+	 $('.slider-container').append('<div class="loading">Loading...</div>');
+});
 
-  function hideDropdown ($el) {
-    $el.removeClass(activeClass);
-    timber.cache.$body.off('touchstart');
-  }
+jQuery(document).ready(function($){
+	
+	$("#product .content").fadeIn('slow');
+	$('#product .social, #product .zoom').fadeIn(600);
 
-  function addFocus ($el) {
-    $el.addClass(focusClass);
-  }
-
-  function removeFocus ($el) {
-    $el.removeClass(focusClass);
-  }
-}
-
-timber.productImageSwitch = function () {
-  if ( !timber.cache.$thumbImages.length ) {
-    return;
-  }
-
-  // Switch the main image with one of the thumbnails
-  // Note: this does not change the variant selected, just the image
-  timber.cache.$thumbImages.on('click', function(e) {
-    e.preventDefault();
-    timber.cache.newImage = $(this).attr('href');
-    timber.cache.$mainImage.attr({ src: timber.cache.newImage });
+  
+  $("#add-to-cart").click(function(){
+    var width = $("#add-to-cart").outerWidth();
+    $("#add-to-cart").css({'width': width+'px'});
+    $("#add-to-cart").val("Adding...").animate({
+      color: '#444',
+      backgroundColor: '#fff'
+    }, 400);
   });
-}
+  
+  
+  $('.image img').each(function(){
+    if (!this.complete) { // if image is NOT cached
+      $(this).load(function(){
+        $(this).fadeIn(400);
+      });
+    } else { // if image is cached
+      $(this).fadeIn(400);
+    }
+  });
 
-// Initialize Timber's JS on docready
-$(timber.init)
+});

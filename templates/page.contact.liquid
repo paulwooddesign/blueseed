@@ -1,62 +1,43 @@
-{% comment %}
+<div class="page-title subtitle">
+    <h1>{{ page.title }}</h1>
+</div>
 
-  This page template is a requirement if you are submitting your theme to the Shopify Theme Store.
-  Be sure to select page.contact as the template from the admin page to have this template take effect.
+<div id="content" class="narrow">
 
-  For information on adding more fields, visit:
-    - http://docs.shopify.com/support/configuration/store-customization/adding-fields-to-the-liquid-contact-form
+    {{ page.content }}
 
-{% endcomment %}
-
-<div class="grid">
-
-  <div class="grid-item large--two-thirds push--large--one-sixth">
-
-    <h2>{{ page.title }}</h2>
-
-    {% comment %}
-      Regular page content goes here.
-    {% endcomment %}
-    <div class="rte">
-      {{ page.content }}
-    </div>
-
-    {% comment %}
-      Contact form starts here
-    {% endcomment %}
-    <div>
-      {% form 'contact' %}
-
-        {% comment %}
-          Successful message
-        {% endcomment %}
+    {% form 'contact' %}
         {% if form.posted_successfully? %}
-          <p class="note form-success">
-            Thanks for contacting us! We'll get back to you as soon as possible.
-          </p>
+            <div class="successForm feedback">
+                <p>Thanks for contacting us! We'll get back to you as soon as possible.</p>
+            </div>
         {% endif %}
 
-        {% include 'form-errors-custom' %}
+        {% if form.errors %}
+            <div class="errorForm feedback">
+                <p>Oops, sorry. We were unable to submit your inquiry because it contained {{ form.errors | size | pluralize: 'an error', 'a few errors' }}. Please correct the following and submit again:</p>
+                {% for field in form.errors %}
+                    <p>The {{ field | capitalize | replace: 'Body', 'Message' }} field {{ form.errors.messages[field] }}.</p>
+                {% endfor %}
+            </div>
+        {% endif %}
 
         <div id="contactFormWrapper">
-          <label for="contactFormName" class="hidden-label">Name</label>
-          <input type="text" id="contactFormName" name="contact[name]" placeholder="Name" autocapitalize="words" value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}">
-
-          <label for="contactFormEmail" class="hidden-label">Email</label>
-          <input type="email" id="contactFormEmail" name="contact[email]" placeholder="Email" autocorrect="off" autocapitalize="off" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}">
-
-          <label for="contactFormPhone" class="hidden-label">Phone Number</label>
-          <input type="tel" id="contactFormPhone" name="contact[phone]" placeholder="Phone Number" pattern="[0-9]*" value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}">
-
-          <label for="contactFormMessage" class="hidden-label">Message</label>
-          <textarea rows="10" id="contactFormMessage" name="contact[body]" placeholder="Message">{% if form.body %}{{ form.body }}{% endif %}</textarea>
-
-          <input type="submit" class="btn right" value="Send">
-        </div>
-
-      {% endform %}
-    </div>
-
-  </div>
-
+            <p>
+                <label>Name:</label><br/>
+                <input type="text" id="contactFormName" name="contact[name]" placeholder="" />
+            </p>
+            <p>
+                <label>Email</label><br/>
+                <input type="email" id="contactFormEmail" name="contact[email]" placeholder="" />
+            </p>
+            <p>
+                <label>Message:</label><br/>
+                <textarea rows="15" cols="75" id="contactFormMessage" name="contact[body]"></textarea>
+            </p>
+            <p>
+                <input type="submit" id="contactFormSubmit" value="SEND" />
+            </p>    		
+        </div><!-- #contactFormWrapper -->
+    {% endform %}
 </div>

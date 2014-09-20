@@ -1,0 +1,44 @@
+.newsletter {
+	margin-bottom: 30px;
+	label {
+	}
+	input {
+		display: inline-block;
+		vertical-align: middle;
+	}
+	input[type=email] {
+	}
+	input[type=submit] {
+		&:focus,
+		&:hover {
+			opacity: 0.5;	
+		}
+	}
+	::placeholder {
+	}
+}
+#breadcrumbs,
+.pagination {
+	font-size: 10px;
+	text-transform: uppercase;
+	padding-bottom: 20px;
+}
+.upper,
+.lower {
+	clear: both;
+	@extend %clearfix;
+}
+.lower {
+	border-top: $border;
+	padding: 1.5em 0 0;
+}
+.pagination {
+	text-align: center;
+	.current,
+	a {
+		padding: 2px 3px;
+	}
+	.current {
+		color: $hover;
+	}
+}

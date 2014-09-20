@@ -1,0 +1,26 @@
+#site-footer {
+	padding-top: 35px;
+}
+#copyright {
+	float: left;
+	a {
+		color: $link;	
+		&:focus,
+		&:hover {
+			text-decoration: underline;	
+		}
+	}
+}
+.footer-nav {
+	display: inline-block;
+	float: right;
+	text-align: right;
+	ul {
+		list-style: none;	
+		margin: 0;
+	}
+	li {
+		display: inline-block;
+		margin-left: 40px;
+	}
+}

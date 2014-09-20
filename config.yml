@@ -1,0 +1,8 @@
+---
+:api_key: ecd1b7532991ff05f00bb88b0cefcbb3
+:password: 33e9e72e260053d292a6520185ee83d2
+:store: blueseed.myshopify.com
+:theme_id: 10945171
+:ignore_files:
+- _scss/*
+- node_modules

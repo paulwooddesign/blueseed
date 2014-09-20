@@ -1,0 +1,82 @@
+.top-bar {
+	height: 40px;
+	@extend %clearfix;
+	text-align: right;
+	.account-links {
+		padding-top: 10px;	
+	}
+	a {
+		display: inline-block;
+		vertical-align: middle;
+		margin-left: 30px;
+		font-size: 11px;
+		text-transform: uppercase;	
+		letter-spacing: 1px;
+		padding: 7px 0 4px 35px;
+		&.cart-link {
+			background: url('icon-cart.png') no-repeat;	
+		}
+	}
+}
+.account-links {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.page-menu {
+	display: inline-block;
+	float: right;
+	padding-top: 50px;
+	ul {
+		list-style: none;	
+		margin: 0;
+	}
+	li {
+		display: inline-block;
+		margin-left: 20px;
+	}
+	a {
+		text-transform: uppercase;
+		font-size: 11px;
+		font-weight: 300;
+		letter-spacing: 1px;
+	}
+}
+li.social-link {
+	margin-left: 0;
+	&.facebook {
+		margin-left: 20px;
+	}
+	a {
+		display: inline-block;	
+		vertical-align: middle;
+		text-indent: -9999em;
+		width: 22px;
+		height: 20px;
+		overflow: hidden;
+		background: url('social.png') no-repeat;
+		&:focus,
+		&:hover {
+			opacity: 0.5;	
+		}
+	}
+	&.twitter a {
+		background-position: -22px 0;	
+	}
+	&.pinterest a {
+		background-position: -44px 0;
+	}
+	&.instagram a {
+		background-position: -66px 0;
+	}
+	&.email a {
+		background-position: -90px 0;
+		margin-left: 5px;
+	}
+}
+nav a {
+	&.current,
+	li.active & {
+		color: $hover;
+	}
+}
